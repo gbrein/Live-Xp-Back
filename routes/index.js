@@ -4,7 +4,11 @@ var userController = require('../controllers/userController.js');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 var userModel = require('../models/userModel.js');
-
+var SchoolsController = require('../controllers/SchoolsController.js');
+const bodyParser = require('body-parser')
+router.use(bodyParser.urlencoded({
+    extended: true
+  }));
 router.use(passport.initialize());
 router.use(passport.session());
 
@@ -64,7 +68,7 @@ router.get('/listed', userController.list);
 /*
  * GET
  */
-// router.get('/:id', userController.show);
+router.get('/user/:id', userController.show);
 
 router.get('/subscribe', (request, response) => {
     response.render('subscribe');
@@ -93,5 +97,34 @@ router.delete('/:id', userController.remove);
 router.get('/list', function (req, res, next) {
     res.send('respond with a resource');
 });
+
+
+/* Schools*/
+
+
+/*
+ * GET
+ */
+router.get('/schools', SchoolsController.list);
+
+/*
+ * GET
+ */
+router.get('/schools/:id', SchoolsController.show);
+
+/*
+ * POST
+ */
+router.post('/schools', SchoolsController.create);
+
+/*
+ * PUT
+ */
+router.put('/schools/:id', SchoolsController.update);
+
+/*
+ * DELETE
+ */
+router.delete('/schools/:id', SchoolsController.remove);
 
 module.exports = router;

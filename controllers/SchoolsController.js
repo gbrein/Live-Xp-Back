@@ -1,5 +1,6 @@
 var SchoolsModel = require('../models/SchoolsModel.js');
 
+
 /**
  * SchoolsController.js
  *
@@ -48,16 +49,18 @@ module.exports = {
      */
     create: function (req, res) {
         var Schools = new SchoolsModel({
-			Nome : req.body.Nome,
+			nome : req.body.nome,
 			CNPJ : req.body.CNPJ,
-			Endereco : req.body.Endereco,
+			endereco : req.body.Endereco,
 			email : req.body.email,
 			telefone : req.body.telefone,
 			cursos : req.body.cursos,
-			categoria : req.body.categoria
-
+            categoria : req.body.categoria,
+            bairro: req.body.bairro,
+            CEP: req.body.CEP,
+            imgLink: '',
         });
-
+        console.log(req)
         Schools.save(function (err, Schools) {
             if (err) {
                 return res.status(500).json({

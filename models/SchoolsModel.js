@@ -2,13 +2,16 @@ var mongoose = require('mongoose');
 var Schema   = mongoose.Schema;
 
 var SchoolsSchema = new Schema({
-	'Nome' : String,
+	'nome' : String,
 	'CNPJ' : Number,
-	'Endereco' : String,
+	'endereco' : String,
 	'email' : String,
 	'telefone' : Number,
 	'cursos' : Array,
-	'categoria' : Array
+	'categoria' : Array,
+	'CEP': Number,
+	'bairro': String,
+	'imgLink': String,
 });
 
 module.exports = mongoose.model('Schools', SchoolsSchema);
