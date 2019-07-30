@@ -1,4 +1,6 @@
 var userModel = require('../models/userModel.js');
+var bcrypt = require('bcryptjs');
+var salt = bcrypt.genSaltSync(10);
 
 /**
  * userController.js
@@ -26,8 +28,9 @@ module.exports = {
      * userController.show()
      */
     show: function (req, res) {
-        var id = req.params.id;
-        userModel.findOne({_id: id}, function (err, user) {
+        var username = req.body.username
+        console.log(req.body)
+        userModel.findOne({username: username}, function (err, user) {
             if (err) {
                 return res.status(500).json({
                     message: 'Error when getting user.',
@@ -39,7 +42,17 @@ module.exports = {
                     message: 'No such user'
                 });
             }
-            return res.json(user);
+            var password = req.body.password;
+            var crypted = bcrypt.hashSync(password, salt);
+            console.log(crypted + ' password')
+            console.log(user.password + ' user pass')
+            bcrypt.compare(password, user.password, function(err, result){
+                 if (result){
+                return res.json(user)
+                }else {
+                return false;     
+            } 
+            })
         });
     },
 
@@ -47,9 +60,12 @@ module.exports = {
      * userController.create()
      */
     create: function (req, res) {
+        let password = req.body.password;
+        let hash = bcrypt.hashSync(password, salt);
+
         var user = new userModel({
 			username : req.body.username,
-			password : req.body.password,
+			password : hash,
 			email : req.body.email,
 			name : req.body.name
 

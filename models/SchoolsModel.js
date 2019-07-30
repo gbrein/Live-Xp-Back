@@ -10,6 +10,7 @@ var SchoolsSchema = new Schema({
 	'cursos' : Array,
 	'categoria' : Array,
 	'CEP': Number,
+	'descricao': String,
 	'bairro': String,
 	'imgLink': String,
 });
